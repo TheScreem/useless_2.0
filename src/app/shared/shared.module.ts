@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { ProductHomeComponent } from './components/products/product-home/product-home.component';
-import { CommonModule} from "@angular/common";
+import {CommonModule, NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
     ProductHomeComponent,
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    NgOptimizedImage
+
   ],
   exports: [
     ProductHomeComponent

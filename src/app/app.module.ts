@@ -7,6 +7,7 @@ import { DataService} from "./core/services/data-service.service";
 import { HomeModule} from "./features/home/home.module";
 import { CoreModule} from "./core/core.module";
 import { SharedModule} from "./shared/shared.module";
+import {CommonModule} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { SharedModule} from "./shared/shared.module";
     HomeModule,
     CoreModule,
     SharedModule,
+    CommonModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]
