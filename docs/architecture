@@ -1,0 +1,31 @@
+src/
+|-- app/
+    |-- core/                # Contient des services singleton, des composants à usage unique et d'autres fonctionnalités centrales
+        |-- guards/          # Gardiens pour protéger certaines routes
+        |-- services/       # Services comme l'authentification, panier, etc.
+        |-- interceptors/   # Intercepteurs HTTP, par exemple pour gérer les tokens
+        |-- core.module.ts  # Module pour core
+    |-- shared/              # Contient des composants, des directives et des pipes partagés
+        |-- components/     # Composants réutilisables (par exemple, une barre de navigation)
+        |-- models/         # Modèles/Interfaces (comme Product, User, Order)
+        |-- utils/          # Fonctions utilitaires
+        |-- shared.module.ts# Module pour les éléments partagés
+    |-- features/           # Les fonctionnalités principales de votre application
+        |-- home/           # Page d'accueil
+        |-- products/       # Liste des produits, détails du produit, etc.
+            |-- product-list/
+            |-- product-detail/
+        |-- cart/           # Panier d'achat
+        |-- checkout/       # Processus de paiement
+        |-- user/           # Fonctionnalités liées à l'utilisateur (profil, commandes, authentification)
+            |-- login/
+            |-- register/
+            |-- profile/
+        |-- admin/          # Fonctionnalités d'administration (ajouter/modifier des produits, voir des commandes, etc.)
+            |-- product-management/
+            |-- order-management/
+    |-- assets/             # Ressources statiques: images, logos, etc.
+    |-- environments/       # Configurations d'environnement
+    |-- app-routing.module.ts # Configuration de routage principale
+    |-- app.module.ts       # Module principal
+    |-- app.component.ts/html/css # Composant principal
