@@ -4,10 +4,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DataService} from "./core/services/data-service.service";
-import { HomeModule} from "./features/home/home.module";
 import { CoreModule} from "./core/core.module";
 import { SharedModule} from "./shared/shared.module";
-import {CommonModule} from "@angular/common";
+import { FeaturesModule} from "./features/features.module";
+import { CommonModule } from "@angular/common";
+import {HomeModule} from "./features/home/home.module";
+
 
 @NgModule({
   declarations: [
@@ -17,10 +19,11 @@ import {CommonModule} from "@angular/common";
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    HomeModule,
     CoreModule,
     SharedModule,
-    CommonModule
+    CommonModule,
+    FeaturesModule,
+    HomeModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]
