@@ -3,7 +3,7 @@ const cors = require('cors');
 const { Pool } = require('pg');
 const app = express();
 const PORT = 3001;
-
+app.use(express.json());
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
@@ -61,6 +61,18 @@ app.get('/api/product/:id', async (req, res) => {
   }
 });
 
+app.post('/api/products/', async (req, res) => {
+  const { name, description, price, stock_quantity, image_url } = req.body;
+  try {
+    const result = await pool.query('INSERT INTO products(name, description, price, stock_quantity, image_url) VALUES($1, $2, $3, $4, $5) RETURNING product_id', [name, description, price, stock_quantity, image_url]);
+    res.json({ id: result.rows[0].product_id, message: 'Produit ajouté avec succès!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+});
+
+
 // Clients
 app.get('/api/customers/', async (req, res) => {
   try {
@@ -83,6 +95,19 @@ app.get('/api/customers/:id', async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur' });
   }
 });
+
+app.post('/api/customers/', async (req, res) => {
+  // Adaptez ceci selon les colonnes de votre table customers
+  const { first_name, last_name, email, address, city, country, phone_number } = req.body;
+  try {
+    const result = await pool.query('INSERT INTO customers(first_name, last_name, email, address, city, country, phone_number) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING customer_id', [first_name, last_name, email, address, city, country, phone_number]);
+    res.json({ id: result.rows[0].customer_id, message: 'Client ajouté avec succès!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+});
+
 
 // Détails des commandes
 app.get('/api/order-details/', async (req, res) => {
@@ -107,6 +132,18 @@ app.get('/api/order-details/:id', async (req, res) => {
   }
 });
 
+app.post('/api/order-details/', async (req, res) => {
+  // Adaptez ceci selon les colonnes de votre table order_details
+  const { order_id, product_id, quantity, price } = req.body;
+  try {
+    const result = await pool.query('INSERT INTO order_details(order_id, product_id, quantity, price) VALUES($1, $2, $3, $4) RETURNING order_detail_id', [order_id, product_id, quantity, price]);
+    res.json({ id: result.rows[0].order_detail_id, message: 'Détail de commande ajouté avec succès!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+});
+
 // Commandes
 app.get('/api/orders/', async (req, res) => {
   try {
@@ -117,6 +154,19 @@ app.get('/api/orders/', async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur' });
   }
 });
+
+app.post('/api/orders/', async (req, res) => {
+  // Adaptez ceci selon les colonnes de votre table orders
+  const { customer_id, order_date, status } = req.body;
+  try {
+    const result = await pool.query('INSERT INTO orders(customer_id, order_date, status) VALUES($1, $2, $3) RETURNING order_id', [customer_id, order_date, status]);
+    res.json({ id: result.rows[0].order_id, message: 'Commande ajoutée avec succès!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+});
+
 
 app.get('/api/orders/:id', async (req, res) => {
   const orderId = req.params.id;
@@ -129,6 +179,19 @@ app.get('/api/orders/:id', async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur' });
   }
 });
+
+app.post('/api/orders/', async (req, res) => {
+  // Adaptez ceci selon les colonnes de votre table orders
+  const { customer_id, order_date, status } = req.body;
+  try {
+    const result = await pool.query('INSERT INTO orders(customer_id, order_date, status) VALUES($1, $2, $3) RETURNING order_id', [customer_id, order_date, status]);
+    res.json({ id: result.rows[0].order_id, message: 'Commande ajoutée avec succès!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+});
+
 
 // Paiements
 app.get('/api/payments/', async (req, res) => {
@@ -152,4 +215,17 @@ app.get('/api/payments/:id', async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur' });
   }
 });
+
+app.post('/api/payments/', async (req, res) => {
+  // Adaptez ceci selon les colonnes de votre table payments
+  const { order_id, amount, payment_date, payment_method } = req.body;
+  try {
+    const result = await pool.query('INSERT INTO payments(order_id, amount, payment_date, payment_method) VALUES($1, $2, $3, $4) RETURNING payment_id', [order_id, amount, payment_date, payment_method]);
+    res.json({ id: result.rows[0].payment_id, message: 'Paiement effectué avec succès!' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Erreur serveur' });
+  }
+});
+
 module.exports = app;
